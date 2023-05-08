@@ -54,6 +54,7 @@ module Braid
         user_name = git.config(%w(--local --get user.name))
         user_email = git.config(%w(--local --get user.email))
         commit_gpgsign = git.config(%w(--local --get commit.gpgsign))
+        sha_msg = git.show('HEAD')
         Dir.chdir(clone_dir) do
           msg 'Cloning mirror with local changes.'
           git.init
@@ -109,7 +110,7 @@ module Braid
           # emptying them again before the git.read_tree).
           git.update_ref(['--no-deref', 'HEAD', base_revision])
           git.read_tree_um(new_tree)
-          system('git commit -v')
+          git.commit(sha_msg)
           msg "Pushing changes to remote branch #{branch}."
           git.push([remote_url, "HEAD:refs/heads/#{branch}"])
         end

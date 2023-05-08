@@ -256,6 +256,11 @@ module Braid
         end
       end
 
+      sig {returns(String)}
+      def show(sha)
+        invoke('show', ['-s', '--format=%s', sha])
+      end
+
       sig {params(remote: T.nilable(String), args: T::Array[String]).void}
       def fetch(remote = nil, args = [])
         args = ['-n', remote] + args if remote

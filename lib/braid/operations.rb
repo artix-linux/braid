@@ -238,7 +238,7 @@ module Braid
         message_file = nil
         if message # allow nil
           message_file = Tempfile.new('braid_commit')
-          message_file.print("Braid: #{message}")
+          message_file.print("#{message}")
           message_file.flush
           message_file.close
           cmd += ['-F', T.must(message_file.path)]
